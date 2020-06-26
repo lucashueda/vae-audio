@@ -213,9 +213,10 @@ class Conv1dGMVAE(BaseGMVAE):
         mu = self.lin_mu(h2)
         logvar = self.lin_logvar(h2)
         mu, logvar, z = self._infer_latent(mu, logvar)
-        logLogit_qy_x, qy_x, y = self._infer_class(z)
+        # logLogit_qy_x, qy_x, y = self._infer_class(z)
 
-        return mu, logvar, z, logLogit_qy_x, qy_x, y
+        # return mu, logvar, z, logLogit_qy_x, qy_x, y
+        return mu, logvar, z
 
     def decode(self, z):
         h = self.decoder_fc(z)
@@ -223,7 +224,10 @@ class Conv1dGMVAE(BaseGMVAE):
         return x_recon
 
     def forward(self, x):
-        mu, logvar, z, logLogit_qy_x, qy_x, y = self.encode(x)
+        # mu, logvar, z, logLogit_qy_x, qy_x, y = self.encode(x)
+        mu, logvar, z = self.encode(x)
         x_recon = self.decode(z)
 
-        return x_recon, mu, logvar, z, logLogit_qy_x, qy_x, y
+        # return x_recon, mu, logvar, z, logLogit_qy_x, qy_x, y
+
+        return x_recon, mu, logvar, z
